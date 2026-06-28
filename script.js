@@ -1,7 +1,6 @@
 
-const list=[
+const preList=[
 
-// プレバイオ
 "オリゴ糖",
 "イヌリン",
 "白湯",
@@ -9,9 +8,12 @@ const list=[
 "バナナ",
 "オートミール",
 "大麦・もち麦",
-"きな粉",
+"きな粉"
 
-// プロバイオ
+]
+
+const proList=[
+
 "納豆",
 "ヨーグルト",
 "発酵キムチ",
@@ -23,50 +25,78 @@ const list=[
 
 ]
 
-const foods=
-document.getElementById(
-"foods"
-)
+function draw(id,list){
+
+const area=
+document
+.getElementById(id)
 
 list.forEach(f=>{
 
-foods.innerHTML+=`
+area.innerHTML+=`
+
 <div class="item">
 
 <label>
 
 <input
-type="checkbox"
-value="${f}"
->
+type="checkbox">
 
 ${f}
 
 </label>
 
 </div>
+
 `
 
 })
 
+}
+
+draw(
+"pre",
+preList
+)
+
+draw(
+"pro",
+proList
+)
+
 function calc(){
 
-let count=
+let pre=
 
 document
 .querySelectorAll(
-"input[type=checkbox]:checked"
+"#pre input:checked"
+)
+
+.length
+
+let pro=
+
+document
+.querySelectorAll(
+"#pro input:checked"
 )
 
 .length
 
 let foodScore=
-count*10
 
-if(foodScore>80)
+(pre*5)+
+(pro*5)
+
+if(
+foodScore>80
+)
+
 foodScore=80
 
 let sleep=
+
 Number(
 document
 .getElementById(
@@ -78,13 +108,15 @@ document
 let sleepScore=0
 
 if(
-sleep>=7 &&
+sleep>=7
+&&
 sleep<=8
-){
+)
+
 sleepScore=10
-}
 
 let wake=
+
 Number(
 document
 .getElementById(
@@ -97,33 +129,30 @@ sleepScore+=
 wake*2
 
 let total=
+
 foodScore+
 sleepScore
 
 let msg=""
 
-if(total>=90){
+if(
+total>=90
+)
 
 msg=
 "今日はしっかりリカバリーできそう🌙"
 
-}
-
 else if(
 total>=70
-){
+)
 
 msg=
 "腸と睡眠が整っています"
 
-}
-
-else{
+else
 
 msg=
 "今日も小さな積み重ねを"
-
-}
 
 document
 .getElementById(
@@ -133,12 +162,24 @@ document
 .innerHTML=
 
 `
+
 🌙 睡眠リカバリースコア
 
 <h1>
-${total}
-点
+
+${total}点
+
 </h1>
+
+🌱 プレバイオ
+${pre}/8
+
+<br>
+
+🦠 プロバイオ
+${pro}/8
+
+<br><br>
 
 ${msg}
 
